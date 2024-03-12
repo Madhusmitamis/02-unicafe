@@ -1,9 +1,22 @@
 import { useState } from 'react'
 
-const Statistics =({good, neutral, bad}) =>{
-  if (good === 0 && neutral === 0 && bad === 0) {
-    return <h3>No feedback given</h3>
+const Button = ({text, handleClick})=>{
+  return(
+    <button onClick = {handleClick}>{text}</button>
+  )
 }
+const StatisticLine = ({text,value})=>{
+  return(
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
+}
+
+const Statistics =({good, neutral, bad}) =>{
+ if (good === 0 && neutral === 0 && bad === 0) {
+    return <h3>No feedback given</h3> }
   const all = good + neutral + bad
 
   const averageScore = (good * 1 +neutral *0 + bad * -1) / all
@@ -11,9 +24,17 @@ const Statistics =({good, neutral, bad}) =>{
   const positivePercentage = (good / all) * 100
   return (
     <div>
-        <p>all  {all}</p>
-        <p>average {averageScore}</p>
-        <p>positive {positivePercentage} %</p>
+       <h2>Statistics</h2>
+       <table>
+                <tbody>
+                    <StatisticLine text="good" value={good} />
+                    <StatisticLine text="neutral" value={neutral} />
+                    <StatisticLine text="bad" value={bad} />
+                    <StatisticLine text="all" value={all} />
+                    <StatisticLine text="average" value={averageScore.toFixed(1)} />
+                    <StatisticLine text="positive " value={positivePercentage.toFixed(1) + " %"} />
+                </tbody>
+            </table>
         
       </div>
   )
@@ -43,11 +64,11 @@ const App = () => {
     <div>
       <h1>give feedback</h1>
       <div>
-        <button onClick= {handleGood}>good</button>
-        <button onClick= {handleNeutral}>neutral</button>
-        <button onClick={handleBad}>bad</button>
+      <Button text="good" handleClick={handleGood} />
+      <Button text="neutral" handleClick={handleNeutral} />
+      <Button text="bad" handleClick={handleBad} />
       </div>
-       <h2>Statistics</h2>
+       
         {/* <p>good {good}</p>
         <p>neutral {neutral}</p>
         <p>bad {bad}</p>  */}
